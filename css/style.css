@@ -1,0 +1,321 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto+Mono:wght@400&family=Roboto:wght@400;700&display=swap');
+/* css/style.css */
+
+@font-face {
+    font-family: 'MyCustomFont'; /* The name you'll use in your CSS */
+    src: url('../fonts/MyCustomFont-Regular.woff2') format('woff2'), /* Path relative to CSS file */
+         url('../fonts/MyCustomFont-Regular.woff') format('woff');  /* Fallback */
+    font-weight: normal; /* Or 400 */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MyCustomFont';
+    src: url('../fonts/MyCustomFont-Bold.woff2') format('woff2'),
+         url('../fonts/MyCustomFont-Bold.woff') format('woff');
+    font-weight: bold; /* Or 700 */
+    font-style: normal;
+}
+
+:root {
+    /* ... */
+    --font-main: 'MyCustomFont', Arial, sans-serif; /* Use your custom font */
+    /* ... */
+}
+:root {
+    --primary-color: #3498db;
+    --primary-hover-color: #2980b9;
+    --secondary-color: #2c3e50;
+    --accent-color: #e74c3c;
+    --success-color: #2ecc71;
+    --warning-color: #f39c12;
+    --warning-hover-color: #e67e22;
+
+    --bg-main: #f4f6f8;
+    --bg-panel: #ffffff;
+    --bg-input: #fdfdfd;
+    --bg-preformatted: #e8ecf1;
+
+    --text-color-main: #34495e;
+    --text-color-light: #ffffff;
+    --text-color-headings: var(--secondary-color); /* Headings will use --font-main */
+    --text-color-labels: #555e68;
+    --text-color-subtle: #7f8c8d;
+
+    --border-color-light: #dce4ec;
+    --border-color-medium: #bdc3c7;
+
+    --border-radius: 6px;
+    --box-shadow-panel: 0 4px 15px rgba(0, 0, 0, 0.08);
+    --box-shadow-interactive: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+    /* UPDATED FONT VARIABLES */
+    --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    /* --font-headings: var(--font-main); /* Ensure headings use the same main font */ /* No longer needed if body and h* use --font-main */
+    --font-code: 'Roboto Mono', 'SFMono-Regular', Menlo, Monaco, 'Liberation Mono', Consolas, monospace; /* Keeping a monospace for code */
+
+    --spacing-unit: 8px;
+    --navbar-height: 65px;
+}
+
+/* --- General Styles --- */
+body {
+    font-family: var(--font-main); /* Applies "Inter" to most text */
+    margin: 0;
+    background-color: var(--bg-main);
+    color: var(--text-color-main);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    line-height: 1.6;
+    font-size: 15px;
+}
+
+/* Ensure headings also use the main font if not inheriting properly or if previously set otherwise */
+h1, h2, h3, h4, h5, h6,
+.navbar h1, /* Explicitly set for navbar if needed */
+.panel h2, .panel h3, #localStorageListContainer h4 /* Explicitly set for panel headings */
+{
+    font-family: var(--font-main); /* Use Inter for all headings */
+    font-weight: 700; /* Use the bold weight for headings */
+}
+
+/* Style for code elements to use the monospace font */
+pre,
+code,
+kbd,
+samp,
+#faDefinitionOutput, /* Assuming this should be monospace */
+#operationResultOutput /* Output might be better with --font-main, or --font-code if it shows technical details */
+{
+    font-family: var(--font-code);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* --- Navbar & Footer --- */
+.navbar {
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    color: var(--text-color-light);
+    height: var(--navbar-height);
+    padding: 0 calc(var(--spacing-unit) * 3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    font-size: 1.5em;
+    font-weight: 500;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+/* --- Main Layout --- */
+.main-container {
+    display: flex;
+    flex-grow: 1;
+    padding: calc(var(--spacing-unit) * 2);
+    gap: calc(var(--spacing-unit) * 2);
+    margin-top: var(--navbar-height);
+}
+.sidebar {
+    width: 450px; /* Wider sidebar */
+    min-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 2);
+    max-height: calc(100vh - var(--navbar-height) - (var(--spacing-unit) * 4)); /* Adjust based on padding */
+    overflow-y: auto;
+    padding-right: calc(var(--spacing-unit) * 0.5);
+}
+.sidebar::-webkit-scrollbar { width: 8px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border-color-medium); border-radius: 4px; }
+.sidebar::-webkit-scrollbar-thumb:hover { background: var(--text-color-subtle); }
+
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column; /* This is important if sticky-content-column is its direct child */
+    gap: calc(var(--spacing-unit) * 2);
+    min-width: 0;
+}
+
+/* --- Sticky Column Wrapper in Main Content --- */
+.sticky-content-column {
+    position: sticky;
+    top: calc(var(--navbar-height) + var(--spacing-unit) * 2);
+    align-self: flex-start;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 2);
+    z-index: 10;
+}
+
+/* --- Panel Styling --- */
+.panel {
+    background-color: var(--bg-panel);
+    border: 1px solid var(--border-color-light);
+    border-radius: var(--border-radius);
+    padding: calc(var(--spacing-unit) * 2.5);
+    box-shadow: var(--box-shadow-panel);
+}
+
+.panel h2, .panel h3, #localStorageListContainer h4 {
+    margin-top: 0;
+    color: var(--text-color-headings);
+    padding-bottom: calc(var(--spacing-unit) * 0.75);
+    margin-bottom: calc(var(--spacing-unit) * 2);
+    font-weight: 600;
+}
+.panel h2 { font-size: 1.25em; border-bottom: 2px solid var(--primary-color); }
+.panel h3, #localStorageListContainer h4 { font-size: 1.1em; border-bottom: 1px dashed var(--primary-color); color: var(--primary-color); }
+#localStorageListContainer h4 { margin-bottom: var(--spacing-unit) * 1.5; }
+.panel-hr { border: none; border-top: 1px solid var(--border-color-light); margin: calc(var(--spacing-unit) * 2.5) 0; }
+
+/* --- Form Elements & Groups --- */
+.form-group { margin-bottom: calc(var(--spacing-unit) * 2); }
+.form-group:last-child { margin-bottom: 0; }
+
+.form-group label { display: block; margin-bottom: calc(var(--spacing-unit) * 0.75); font-weight: 600; font-size: 0.9em; color: var(--text-color-labels); }
+
+.form-group input[type="text"],
+.form-group select {
+    width: 100%;
+    padding: var(--spacing-unit) calc(var(--spacing-unit) * 1.25);
+    border: 1px solid var(--border-color-light);
+    border-radius: var(--border-radius);
+    background-color: var(--bg-input);
+    font-size: 0.9em;
+    color: var(--text-color-main);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.form-group input[type="text"]:focus,
+.form-group select:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25); outline: none; }
+
+.form-group input[type="checkbox"] { margin-right: var(--spacing-unit); vertical-align: middle; transform: scale(1.1); accent-color: var(--primary-color); }
+.form-group label.checkbox-label { /* Use this class for "Is Final?" label */
+    display: inline-block; font-weight: normal; margin-left: 0; margin-bottom: 0; vertical-align: middle; color: var(--text-color-main); white-space: nowrap;
+}
+
+.form-group-inline { display: flex; align-items: center; gap: var(--spacing-unit); }
+.form-group-inline label { margin-bottom: 0; flex-shrink: 0; }
+.form-group-inline label.design-label { /* Specific for labels in design panel inline groups */
+    flex-basis: 110px; /* Give a bit more space for these labels */
+    text-align: right;
+    padding-right: var(--spacing-unit);
+}
+.form-group-inline input[type="text"],
+.form-group-inline select { flex-grow: 1; min-width: 80px; width: auto; margin-bottom: 0; }
+.form-group-inline input[type="checkbox"] { flex-shrink: 0; }
+.form-group-inline button { flex-shrink: 0; margin-left: 0; }
+/* Transition Group - Multi-line Layout */
+.transition-group { padding: var(--spacing-unit) * 2; border: 1px solid var(--border-color-light); border-radius: var(--border-radius); background-color: #fcfdff; }
+.transition-group .form-group { margin-bottom: calc(var(--spacing-unit) * 1.5); } /* Spacing between From/Symbol/To lines */
+.transition-group .form-group-inline .transition-label { flex-basis: 100px; flex-shrink: 0; font-size: 0.9em; text-align: right; padding-right: var(--spacing-unit); color: var(--text-color-labels); }
+.transition-group .form-group-inline input[type="text"],
+.transition-group .form-group-inline select { font-size: 0.9em; padding: var(--spacing-unit); }
+.transition-button-group { text-align: right; margin-top: var(--spacing-unit); }
+.transition-button-group button { padding: var(--spacing-unit) calc(var(--spacing-unit) * 1.5); font-size: 0.9em; }
+
+/* --- Button Styling --- */
+button, .file-label-button { background-color: var(--primary-color); color: var(--text-color-light); padding: var(--spacing-unit) calc(var(--spacing-unit) * 1.75); border: none; border-radius: var(--border-radius); cursor: pointer; font-size: 0.9em; font-weight: 500; text-align: center; transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease; display: inline-block; }
+button:hover, .file-label-button:hover { background-color: var(--primary-hover-color); transform: translateY(-1px); box-shadow: var(--box-shadow-interactive); }
+button:active, .file-label-button:active { transform: translateY(0px); box-shadow: none; }
+button:disabled { background-color: var(--medium-grey-color); color: var(--dark-grey-color); cursor: not-allowed; transform: none; box-shadow: none; }
+
+.file-label-button { width: 100%; }
+.button-warning { background-color: var(--warning-color); }
+.button-warning:hover { background-color: var(--warning-hover-color); }
+.full-width-btn { width: 100%; display: block; }
+.button-small { padding: calc(var(--spacing-unit)*0.75) calc(var(--spacing-unit) * 1.25); font-size: 0.8em; }
+.button-group { display: flex; gap: var(--spacing-unit); }
+.button-group button { flex: 1; }
+
+/* --- Output Areas --- */
+pre { background-color: var(--bg-preformatted); padding: var(--spacing-unit) * 1.5; border-radius: var(--border-radius); border: 1px solid var(--border-color-light); white-space: pre-wrap; word-break: break-all; font-family: var(--font-code); font-size: 0.85em; max-height: 200px; overflow-y: auto; color: var(--text-color-main); line-height: 1.5; }
+#operationResultOutput { max-height: 120px; }
+#operationResultOutput.success-message { color: #12805E; font-weight: 500; background-color: #d4efdf; border-left: 5px solid var(--success-color); }
+#operationResultOutput.error-message { color: #b33c2e; font-weight: 500; background-color: #fbecec; border-left: 5px solid var(--accent-color); }
+
+/* --- Visualization Panel & Container --- */
+#visualization-panel { /* Now part of .sticky-content-column, no longer sticky itself */
+    height: 480px; /* Desired height for the visualization area */
+    display: flex;
+    flex-direction: column;
+}
+#fa-graph-container { flex-grow: 1; height: auto; min-height: 250px; border: 1px solid var(--border-color-light); border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center; background-color: var(--bg-panel); position: relative; overflow: hidden; box-shadow: inset 0 0 10px rgba(0,0,0,0.03); }
+#fa-graph-container p { color: var(--text-color-subtle); font-style: italic; }
+/* --- localStorage List Styling --- */
+#localStorageListContainer { margin-top: var(--spacing-unit) * 1.5; }
+#localStorageListContainer h4 { margin-bottom: var(--spacing-unit); font-size: 1em; }
+#localStorageFASelector { list-style-type: none; padding-left: 0; max-height: 180px; overflow-y: auto; border: 1px solid var(--border-color-light); border-radius: var(--border-radius); padding: var(--spacing-unit); background-color: var(--bg-input); }
+.saved-fa-item { display: flex; justify-content: space-between; align-items: center; padding: calc(var(--spacing-unit)*0.75) var(--spacing-unit); border-bottom: 1px solid var(--border-color-light); font-size: 0.9em; }
+.saved-fa-item:last-child { border-bottom: none; }
+.saved-fa-item .fa-name { flex-grow: 1; margin-right: var(--spacing-unit); word-break: break-all; color: var(--text-color-main); cursor: default; }
+.saved-fa-item .button-group-ls { display: flex; gap: calc(var(--spacing-unit)*0.75); flex-shrink: 0; }
+.no-saved-items { padding: var(--spacing-unit); color: var(--text-color-subtle); font-style: italic; text-align: center; }
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 992px) {
+    .main-container { flex-direction: column; }
+    .sidebar { width: 100%; min-width: unset; max-height: none; overflow-y: visible; padding-right: 0; }
+    .sticky-content-column { position: static; align-self: stretch; } /* Unstick the column */
+    #visualization-panel { height: 400px; min-height: 300px; }
+    .main-content { min-height: auto; }
+}
+
+@media (max-width: 768px) {
+    body { font-size: 14px; }
+    :root { --navbar-height: 60px; --spacing-unit: 6px; }
+
+    .panel { padding: var(--spacing-unit) * 2; }
+    .panel h2 { font-size: 1.15em; margin-bottom: var(--spacing-unit) * 1.5; }
+    .panel h3 { font-size: 1.05em; margin-bottom: var(--spacing-unit) * 1.5; }
+    .form-group { margin-bottom: var(--spacing-unit) * 1.5; }
+
+    .form-group-inline,
+    #fa-design-panel .form-group.form-group-inline { /* Ensure all inline groups stack */
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-unit);
+    }
+    .form-group-inline label,
+    #fa-design-panel .form-group.form-group-inline label {
+        margin-bottom: calc(var(--spacing-unit)*0.5);
+        text-align: left;
+        flex-basis: auto !important; /* Override fixed basis when stacked */
+        padding-right: 0 !important;
+    }
+    .form-group-inline input[type="text"],
+    .form-group-inline select,
+    .form-group-inline button,
+    #fa-design-panel .form-group.form-group-inline input[type="text"],
+    #fa-design-panel .form-group.form-group-inline select,
+    #fa-design-panel .form-group.form-group-inline button {
+        width: 100%;
+        margin: 0 0 var(--spacing-unit) 0;
+    }
+    #fa-design-panel .form-group.form-group-inline label.checkbox-label { margin-left: 0; }
+    .form-group-inline *:last-child { margin-bottom: 0; }
+
+    .transition-group .form-group-inline .transition-label {
+        flex-basis: auto !important; /* Reset fixed basis */
+        text-align: left;
+        padding-right: 0;
+    }
+    .transition-button-group { text-align: left; } /* Or stretch button */
+    .transition-button-group button { width: 100%; }
+
+
+    button, .file-label-button { font-size: 0.9em; padding: var(--spacing-unit) calc(var(--spacing-unit) * 1.5); }
+    .button-small { font-size: 0.85em; padding: calc(var(--spacing-unit)*0.75) var(--spacing-unit); }
+    pre { font-size: 0.8em; }
+
+    #visualization-panel { height: 350px; }
+}

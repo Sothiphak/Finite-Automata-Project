@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finite Automata Workbench</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
+</head>
+<body>
+    <header class="navbar">
+        <h1>Finite Automata Workbench</h1>
+    </header>
+
+    <div class="main-container">
+        <aside class="sidebar">
+            <div class="panel" id="fa-design-panel">
+                <h2>Design Automaton</h2>
+                <div class="form-group form-group-inline">
+                    <label for="stateName" class="design-label">State Name:</label>
+                    <input type="text" id="stateName" placeholder="e.g., q0">
+                    <label for="isFinal" class="checkbox-label">Is Final?</label>
+                    <input type="checkbox" id="isFinal">
+                    <button id="addStateBtn">Add State</button>
+                </div>
+
+                <div class="form-group form-group-inline">
+                    <label for="alphabetSymbol" class="design-label">Alphabet Symbol:</label>
+                    <input type="text" id="alphabetSymbol" placeholder="e.g., a">
+                    <button id="addSymbolBtn">Add Symbol</button>
+                </div>
+
+                <div class="form-group form-group-inline">
+                    <label for="startStateSelect" class="design-label">Start State:</label>
+                    <select id="startStateSelect">
+                        <option value="">--Select State--</option>
+                    </select>
+                    <button id="setStartBtn">Set as Start</button>
+                </div>
+
+                <div class="transition-group">
+                    <h3>Define Transition</h3>
+                    <div class="form-group form-group-inline">
+                        <label for="fromStateSelect" class="transition-label">From:</label>
+                        <select id="fromStateSelect">
+                            <option value="">--Select State--</option>
+                        </select>
+                    </div>
+                    <div class="form-group form-group-inline">
+                        <label for="transitionSymbol" class="transition-label">Symbol (or ε):</label>
+                        <input type="text" id="transitionSymbol" placeholder="e.g., a, b, ε">
+                    </div>
+                    <div class="form-group form-group-inline">
+                        <label for="toStateSelect" class="transition-label">To:</label>
+                        <select id="toStateSelect">
+                            <option value="">--Select State--</option>
+                        </select>
+                    </div>
+                    <div class="form-group transition-button-group">
+                        <button id="addTransitionBtn">Add Transition</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel" id="current-fa-info-panel">
+                <h2>Current FA Definition</h2>
+                <pre id="faDefinitionOutput">Automaton definition will appear here.</pre>
+            </div>
+
+            <div class="panel" id="operations-panel">
+                <h2>Operations</h2>
+                <div class="form-group">
+                    <button id="isDeterministicBtn" class="full-width-btn">Check: Deterministic / Non-deterministic</button>
+                </div>
+                <div class="form-group form-group-inline">
+                    <label for="testStringInput">Test String:</label>
+                    <input type="text" id="testStringInput" placeholder="Enter string">
+                    <button id="testStringBtn">Test</button>
+                </div>
+                <div class="form-group button-group">
+                    <button id="convertToDFABtn">NFA to DFA</button>
+                    <button id="minimizeDFABtn">Minimize DFA</button>
+                </div>
+            </div>
+
+            <div class="panel" id="management-panel">
+                <h2>Manage Automata</h2>
+                 <div class="form-group">
+                    <button id="clearFABtn" class="button-warning full-width-btn">Clear/Reset Current Automaton</button>
+                </div>
+                 <hr class="panel-hr">
+                 <div class="form-group form-group-inline">
+                    <label for="faNameSaveFile">Save to File As:</label>
+                    <input type="text" id="faNameSaveFile" placeholder="myAutomaton.json">
+                    <button id="saveFAToFileBtn">Download</button>
+                </div>
+                <div class="form-group">
+                    <label for="loadFAFromFileInput" class="file-label-button full-width-btn">Load FA from File (.json)</label>
+                    <input type="file" id="loadFAFromFileInput" accept=".json" style="display: none;">
+                </div>
+                <hr class="panel-hr">
+                <h3>Browser Storage</h3>
+                <div class="form-group form-group-inline">
+                    <label for="faNameLocalStorage">Automaton Name:</label>
+                    <input type="text" id="faNameLocalStorage" placeholder="mySavedFA">
+                    <button id="saveFAToLSBtn">Save to Browser</button>
+                </div>
+                <div id="localStorageListContainer">
+                    <h4>Saved in Browser:</h4>
+                    <ul id="localStorageFASelector">
+                        <li class="no-saved-items">No automata saved in browser yet.</li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="sticky-content-column">
+                <div class="panel" id="visualization-panel">
+                    <h2>Visualization</h2>
+                    <div id="fa-graph-container">
+                        <p>Graph will appear here once an automaton is defined.</p>
+                    </div>
+                </div>
+
+                <div class="panel" id="output-panel">
+                    <h2>Output & Results</h2>
+                    <pre id="operationResultOutput">Output will appear here.</pre>
+                </div>
+            </div> </main>
+    </div>
+
+    <script src="js/fa_state.js"></script>
+    <script src="js/fa_logic.js"></script>
+    <script src="js/storage.js"></script> <script src="js/app.js"></script>
+    <script src="js/visualization.js"></script>
+</body>
+</html>
