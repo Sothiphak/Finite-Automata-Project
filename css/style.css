@@ -261,6 +261,9 @@ pre { background-color: var(--bg-preformatted); padding: var(--spacing-unit) * 1
 .saved-fa-item .button-group-ls { display: flex; gap: calc(var(--spacing-unit)*0.75); flex-shrink: 0; }
 .no-saved-items { padding: var(--spacing-unit); color: var(--text-color-subtle); font-style: italic; text-align: center; }
 
+/* style.css */
+/* ... (existing CSS rules) ... */
+
 /* --- Responsive Adjustments --- */
 @media (max-width: 992px) {
     .main-container { flex-direction: column; }
@@ -274,10 +277,10 @@ pre { background-color: var(--bg-preformatted); padding: var(--spacing-unit) * 1
     body { font-size: 14px; }
     :root { --navbar-height: 60px; --spacing-unit: 6px; }
 
-    .panel { padding: var(--spacing-unit) * 2; }
+    .panel { padding: calc(var(--spacing-unit) * 2); }
     .panel h2 { font-size: 1.15em; margin-bottom: var(--spacing-unit) * 1.5; }
-    .panel h3 { font-size: 1.05em; margin-bottom: var(--spacing-unit) * 1.5; }
-    .form-group { margin-bottom: var(--spacing-unit) * 1.5; }
+    .panel h3, #localStorageListContainer h4 { font-size: 1.05em; margin-bottom: var(--spacing-unit) * 1.5; } /* Updated to include #localStorageListContainer h4 for consistency */
+    .form-group { margin-bottom: calc(var(--spacing-unit) * 1.5); }
 
     .form-group-inline,
     #fa-design-panel .form-group.form-group-inline { /* Ensure all inline groups stack */
@@ -299,10 +302,22 @@ pre { background-color: var(--bg-preformatted); padding: var(--spacing-unit) * 1
     #fa-design-panel .form-group.form-group-inline select,
     #fa-design-panel .form-group.form-group-inline button {
         width: 100%;
-        margin: 0 0 var(--spacing-unit) 0;
+        margin: 0 0 var(--spacing-unit) 0; /* Adjust margin for stacked items */
     }
     #fa-design-panel .form-group.form-group-inline label.checkbox-label { margin-left: 0; }
     .form-group-inline *:last-child { margin-bottom: 0; }
+
+    /* Ensure labels associated with checkboxes are easily tappable and aligned in stacked view */
+    .form-group label.checkbox-label {
+        padding-top: calc(var(--spacing-unit) * 0.5);
+        padding-bottom: calc(var(--spacing-unit) * 0.5);
+        display: block; /* Make it block to align with other stacked form elements */
+        width: fit-content; /* Prevent full width if not desired, but ensure it's on its own line effectively */
+    }
+     .form-group input[type="checkbox"] { /* Adjust checkbox margin for better alignment when stacked */
+        margin-right: calc(var(--spacing-unit) * 0.5); /* Reduce right margin if label is now block */
+    }
+
 
     .transition-group .form-group-inline .transition-label {
         flex-basis: auto !important; /* Reset fixed basis */
@@ -318,4 +333,81 @@ pre { background-color: var(--bg-preformatted); padding: var(--spacing-unit) * 1
     pre { font-size: 0.8em; }
 
     #visualization-panel { height: 350px; }
+}
+
+/* Additional media query for very small mobile devices */
+@media (max-width: 480px) {
+    body {
+        font-size: 13px; /* Slightly smaller base font */
+    }
+
+    :root {
+        --spacing-unit: 5px; /* Further reduce spacing */
+        --navbar-height: 55px; /* Adjust navbar height */
+    }
+
+    .navbar {
+        font-size: 1.1em; /* Reduce navbar overall font scale */
+        padding: 0 calc(var(--spacing-unit) * 2);
+    }
+    .navbar h1 {
+        font-size: 1.2em; /* Reduce navbar title font size specifically */
+    }
+
+    .panel {
+        padding: calc(var(--spacing-unit) * 1.5); /* Reduce panel padding more */
+    }
+    .panel h2 { font-size: 1.05em; } /* Further adjust panel heading sizes */
+    .panel h3, #localStorageListContainer h4 { font-size: 0.95em; } /* Further adjust panel subheading sizes */
+
+
+    button, .file-label-button {
+        padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 1.25); /* Adjust button padding */
+        font-size: 0.85em; /* Standardize button font size */
+    }
+    .button-small {
+        font-size: 0.8em; /* Keep small buttons distinct but readable */
+    }
+
+    /* Stack buttons in localStorage list for easier tapping */
+    .saved-fa-item {
+        flex-direction: column; /* Stack name and button group */
+        align-items: flex-start; /* Align items to the start */
+        gap: calc(var(--spacing-unit) * 1);
+    }
+    .saved-fa-item .fa-name {
+        margin-bottom: calc(var(--spacing-unit) * 0.75); /* Add some space below the name */
+    }
+    .saved-fa-item .button-group-ls {
+        width: 100%; /* Make button group take full width */
+        flex-direction: column; /* Stack load/delete buttons vertically */
+        gap: calc(var(--spacing-unit) * 0.75);
+    }
+    .saved-fa-item .button-group-ls button {
+        width: 100%; /* Make buttons full width for easy tapping */
+        text-align: center;
+    }
+
+    #visualization-panel {
+        height: 300px; /* Further reduce visualization height */
+        min-height: 220px; /* Adjust min-height */
+    }
+
+    pre {
+        font-size: 0.75em; /* Further reduce preformatted text size */
+    }
+
+    .form-group { margin-bottom: calc(var(--spacing-unit) * 1.25); } /* Slightly reduce form group margins */
+
+    /* Adjust inline form group labels if necessary, though they are already stacked */
+    .form-group-inline label,
+    #fa-design-panel .form-group.form-group-inline label,
+    .transition-group .form-group-inline .transition-label {
+        font-size: 0.9em; /* Ensure labels are readable */
+    }
+
+    .form-group input[type="text"],
+    .form-group select { /* Input fields font size for readability */
+        font-size: 0.9em;
+    }
 }
